@@ -86,6 +86,18 @@ function loadGeoJSON(filePath, layerGroup) {
         .catch(error => console.error(`Error loading ${filePath}:`, error));
 }
 
+// Load existing features when the page loads
+window.addEventListener('load', function () {
+    // Load points
+    loadGeoJSON('data/points.json', drawnFeatures);
+
+    // Load lines
+    loadGeoJSON('data/lines.json', drawnFeatures);
+
+    // Load polygons
+    loadGeoJSON('data/polygons.json', drawnFeatures);
+});
+
 // Define the URLs for the four layers
 var munsterUrl = 'http://localhost:8081/geoserver/munster/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=munster:munster&maxFeatures=50&outputFormat=application%2Fjson';
 var restaurantsUrl = 'http://localhost:8081/geoserver/investor_advisor/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=investor_advisor:restaurants&maxFeatures=50&outputFormat=application%2Fjson';
@@ -143,7 +155,7 @@ map.addLayer(drawnFeatures);
 var featureStyles = {
     marker: {
         icon: L.icon({
-            iconUrl: './/images/slider-img.png', // Path to your marker icon
+            iconUrl: 'images/bike.png', // Path to your marker icon
             iconSize: [60, 60], // Icon size
             iconAnchor: [30, 55] // Icon anchor point
         })
@@ -292,14 +304,3 @@ fetch(arcgisWfsUrl )
     });
 
 
-// Load existing features when the page loads
-window.addEventListener('load', function () {
-    // Load points
-    loadGeoJSON('data/points.json', drawnFeatures);
-
-    // Load lines
-    loadGeoJSON('data/lines.json', drawnFeatures);
-
-    // Load polygons
-    loadGeoJSON('data/polygons.json', drawnFeatures);
-});
